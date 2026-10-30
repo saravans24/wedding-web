@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Invitation - S. Saravanan & P. Kayathiri</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Tiro+Tamil:ital@0;1&family=Noto+Serif+Malayalam:wght@600&family=Noto+Serif+Telugu:wght@600&family=Noto+Serif+Kannada:wght@600&family=Rozha+One&display=swap');
+  
+  * { box-sizing: border-box; word-break: break-word; overflow-wrap: break-word; }
+  body {
+    margin: 0;
+    padding: 10px;
+    background: linear-gradient(135deg, #fff5f5 0%, #fff9e6 100%);
+    color: #4a1515;
+    font-family: 'Tiro Tamil', serif;
+  }
+
+  .lang-bar {
+    text-align: center;
+    padding: 10px 5px;
+    background: #4a1515;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .lang-btn {
+    background: #d4af37;
+    color: #fff;
+    border: none;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+  }
+
+  .lang-btn:hover, .lang-btn.active-btn {
+    background: #b8860b;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.8);
+  }
+
+  .container {
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 4px double #d4af37;
+    padding: 15px;
+    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.25);
+    border-radius: 12px;
+  }
+
+  .header {
+    text-align: center;
+    border-bottom: 2px solid #d4af37;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+  }
+
+  .header h1 {
+    font-size: 1.8rem;
+    color: #b8860b;
+    margin: 5px 0;
+  }
+
+  .couple-photo-container {
+    text-align: center;
+    margin: 15px 0;
+  }
+
+  .couple-photo {
+    max-width: 100%;
+    width: 280px;
+    height: auto;
+    border: 4px solid #d4af37;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+
+  .names {
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #8b0000;
+    margin: 15px 0;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  .names .groom, .names .bride {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  .names .ampersand {
+    color: #d4af37;
+    font-size: 1.3rem;
+  }
+
+  .details {
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.7;
+    margin: 10px 0;
+    padding: 0 5px;
+  }
+
+  .date-box {
+    background: #fff8dc;
+    border: 2px dashed #d4af37;
+    padding: 10px;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #b8860b;
+    margin: 15px auto;
+    border-radius: 8px;
+    line-height: 1.5;
+  }
+
+  .venue-section {
+    background: #fffdf5;
+    border: 1px solid #e6d5a7;
+    padding: 12px;
+    border-radius: 8px;
+    margin: 15px 0;
+    text-align: center;
+  }
+
+  .venue-text {
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .qrcode-box {
+    padding: 8px;
+    background: #ffffff;
+    border: 2px solid #d4af37;
+    border-radius: 6px;
+    display: inline-block;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.95rem;
+    border-top: 1px solid #ddd;
+    padding-top: 12px;
+  }
+
+  .lang-content {
+    display: none;
+  }
+
+  .lang-content.active {
+    display: block;
+    animation: fadeIn 0.8s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Multi-Language Audio Players -->
+<audio id="audio-ta" loop><source src="./tamil_song.mp4" type="audio/mp3"></audio>
+<audio id="audio-en" loop><source src="english_song.mp3" type="audio/mp3"></audio>
+<audio id="audio-ml" loop><source src="./malayalam.mp4" type="audio/mp3"></audio>
+<audio id="audio-te" loop><source src="./telugu.mp4" type="audio/mp3"></audio>
+<audio id="audio-kn" loop><source src="./kannada_song.mp4" type="audio/mp3"></audio>
+<audio id="audio-hi" loop><source src="./Hindi.mp4" type="audio/mp3"></audio>
+
+<div class="lang-bar">
+  <button class="lang-btn active-btn" onclick="setLang('ta', this)">தமிழ்</button>
+  <button class="lang-btn" onclick="setLang('en', this)">English</button>
+  <button class="lang-btn" onclick="setLang('ml', this)">മലയാളം</button>
+  <button class="lang-btn" onclick="setLang('te', this)">తెలుగు</button>
+  <button class="lang-btn" onclick="setLang('kn', this)">ಕನ್ನಡ</button>
+  <button class="lang-btn" onclick="setLang('hi', this)">हिन्दी</button>
+</div>
+
+<div class="container">
+  <!-- 1. TAMIL -->
+  <div id="content-ta" class="lang-content active" style="font-family: 'Tiro Tamil', serif;">
+    <div class="header">
+      <p style="font-size: 0.9rem; color: #666;">ஸ்ரீ அட்டமாசித்தி சக்கரவர்த்தி விநாயகர் துணை</p>
+      <h1>திருமண அழைப்பிதழ்</h1>
+    </div>
+    <div class="couple-photo-container">
+      <img src="./couple photo.jpeg" alt="Couple Photo" class="couple-photo">
+    </div>
+    <div class="names">
+      <span class="groom">S. சரவணன் B.E.,</span>
+      <span class="ampersand">&amp;</span>
+      <span class="bride">P. காயத்திரி M.Com.,</span>
+    </div>
+    <div class="details">
+      <p><b>எல்லாம் வல்ல இறைவன் திருவருளாலும், தவத்திரு ஸ்ரீலஸ்ரீ சேதுராமசாமி அவர்களின் திருவருளாலும்...</b></p>
+      <p>புளியங்குடி அருள்மிகு ஸ்ரீ பாலசுப்பிரமணிய சுவாமி திருக்கோவிலிலும், செங்குந்தர் சமுதாய திருமண மண்டபத்திலும் நடைபெறும் திருமண வைபவத்திற்கு தங்களை அன்புடன் அழைக்கின்றோம்!</p>
+    </div>
+    <div class="date-box">
+      நாள்: 13-11-2026 வெள்ளிக்கிழமை<br>(காலை 9:00 - 10:30 மணிக்குள்)
+    </div>
+    <div class="venue-section">
+      <div class="venue-text">
+        <h3 style="color: #8b0000; margin:0 0 5px 0;">மண்டப முகவரி / Venue:</h3>
+        <p style="margin: 0;"><b>செங்குந்தர் சமுதாய திருமண மண்டபம்</b><br>(KTC டிப்போ பின்புறம்), புளியங்குடி.</p>
+        <p style="font-size: 0.85rem; color: #555; margin: 5px 0 0 0;">வழித்தடத்தைக் காண QR கோட்டை ஸ்கேன் செய்யவும்.</p>
+      </div>
+      <div class="qrcode-box">
+        <div id="qrcode-ta"></div>
+      </div>
+      <div class="qrcode-link">
+        <a href="https://maps.app.goo.gl/9yMhMgi5ft727Fef9" target="_blank">Get Directions</a>
+      </div>
+    </div>
+    <div class="footer">
+      <p><b>அன்புடன் அழைப்பவர்கள்:</b> இருவீட்டார், உறவினர்கள் மற்றும் நண்பர்கள்</p>
+    </div>
+  </div>
+
+  <!-- 2. ENGLISH -->
+  <div id="content-en" class="lang-content" style="font-family: 'Cinzel', serif;">
+    <div class="header">
+      <p style="font-size: 0.9rem; color: #666;">With Divine Blessings</p>
+      <h1>Wedding Invitation</h1>
+    </div>
+    <div class="couple-photo-container">
+      <img src="./couple photo.jpeg" alt="Couple Photo" class="couple-photo">
+    </div>
+    <div class="names">
+      <span class="groom">S. Saravanan B.E.,</span>
+      <span class="ampersand">&amp;</span>
+      <span class="bride">P. Kayathiri M.Com.,</span>
+    </div>
+    <div class="details" style="font-size: 0.95rem;">
+      <p><b>With the grace of Almighty and Gurus...</b></p>
+      <p>We cordially invite you with your family to grace the marriage ceremony of our children at Arulmigu Sri Balasubramaniya Swami Temple & Sengunthar Samuthaya Thirumana Mandapam, Puliyangudi.</p>
+    </div>
+    <div class="date-box">
+      Date: 13-11-2026, Friday<br>(9:00 AM - 10:30 AM)
+    </div>
+    <div class="venue-section">
+      <div class="venue-text">
+        <h3 style="color: #8b0000; margin:0 0 5px 0;">Venue Location:</h3>
+        <p style="margin: 0;"><b>Sengunthar Samuthaya Thirumana Mandapam</b><br>(Behind KTC Depot), Puliyangudi.</p>
+        <p style="font-size: 0.85rem; color: #555; margin: 5px 0 0 0;">Scan QR code for Google Maps directions.</p>
+      </div>
+      <div class="qrcode-box">
+        <div id="qrcode-en"></div>
+      </div>
+      <div class="qrcode-link">
+        <a href="https://maps.app.goo.gl/9yMhMgi5ft727Fef9" target="_blank">Get Directions</a>
+      </div>
+    </div>
+    <div class="footer">
+      <p><b>Cordially Invited By:</b> Parents, Family Members & Friends</p>
+    </div>
+  </div>
+
+  <!-- 3. MALAYALAM -->
+  <div id="content-ml" class="lang-content" style="font-family: 'Noto Serif Malayalam', serif;">
+    <div class="header">
+      <p style="font-size: 0.9rem; color: #666;">ദൈവാനുഗ്രഹത്തോടെ</p>
+      <h1>വിവാഹ ക്ഷണക്കത്ത്</h1>
+    </div>
+    <div class="couple-photo-container">
+      <img src="./couple photo.jpeg" alt="Couple Photo" class="couple-photo">
+    </div>
+    <div class="names">
+      <span class="groom">എസ്. ശരവണൻ ബി.ഇ.,</span>
+      <span class="ampersand">&amp;</span>
+      <span class="bride">പി. ഗായത്രി എം.കോം.,</span>
+    </div>
+    <div class="details">
+      <p><b>ഈശ്വരാനുഗ്രഹത്താൽ...</b></p>
+      <p>പുളിയങ്കുടി അരുൾமிகு ശ്രീ ബാലസുബ്രഹ്മണ്യ സ്വാമി ക്ഷേത്രത്തിലും സെങ്കുന്തർ സമുദായ തിരുമണ മണ്ഡപത്തിലും വെച്ച് നടക്കുന്ന വിവാഹച്ചടങ്ങിലേക്ക് ഏവരെയും സ്നേഹപൂർവ്വം ക്ഷണിക്കുന്നു!</p>
+    </div>
+    <div class="date-box">
+      തീയതി: 13-11-2026, വെള്ളി<br>(രാവിലെ 9:00 - 10:30)
+    </div>
+    <div class="venue-section">
+      <div class="venue-text">
+        <h3 style="color: #8b0000; margin:0 0 5px 0;">സ്ഥലം:</h3>
+        <p style="margin: 0;"><b>സെങ്കുന്തർ സമുദായ തിരുമണ മണ്ഡപം</b><br>(കെ.ടി.സി. ഡിപ്പോയ്ക്ക് പിന്നിൽ), പുളിയങ്കുടി.</p>
+        <p style="font-size: 0.85rem; color: #555; margin: 5px 0 0 0;">വഴികൾക്കായി ക്യൂ.ആർ കോഡ് സ്കാൻ ചെയ്യുക.</p>
+      </div>
+      <div class="qrcode-box">
+        <div id="qrcode-ml"></div>
+      </div>
+      <div class="qrcode-link">
+        <a href="https://maps.app.goo.gl/9yMhMgi5ft727Fef9" target="_blank">Get Directions</a>
+      </div>
+    </div>
+    <div class="footer">
+      <p><b>സ്നേഹാന്വേഷണങ്ങളോടെ:</b> മാതാപിതാക്കൾ, കുടുംബാംഗങ്ങൾ, സുഹൃത്തുക്കൾ</p>
+    </div>
+  </div>
+
+  <!-- 4. TELUGU -->
+  <div id="content-te" class="lang-content" style="font-family: 'Noto Serif Telugu', serif;">
+    <div class="header">
+      <p style="font-size: 0.9rem; color: #666;">దైవ కృపతో</p>
+      <h1>వివాహ ఆహ్వాన పత్రిక</h1>
+    </div>
+    <div class="couple-photo-container">
+      <img src="./couple photo.jpeg" alt="Couple Photo" class="couple-photo">
+    </div>
+    <div class="names">
+      <span class="groom">ఎస్. శరవణన్ B.E.,</span>
+      <span class="ampersand">&amp;</span>
+      <span class="bride">పి. గాయత్రి M.Com.,</span>
+    </div>
+    <div class="details">
+      <p><b>సర్వేశ్వరుని దివ్య కృపతో...</b></p>
+      <p>పుళియంగుడి அருள்மிகு శ్రీ బాలసుబ్రహ్మణ్య స్వామి వారి దేవాలయం మరియు సెంగుందర్ కమ్యూనిటీ మంటపంలో జరగనున్న వివాహ మహోత్సవానికి కుటుంబ సమేతంగా విచ్చేసి ఆశీర్వదించవలసిందిగా కోరుచున్నాము.</p>
+    </div>
+    <div class="date-box">
+      తేదీ: 13-11-2026, శుక్రవారం<br>(ఉదయం 9:00 - 10:30)
+    </div>
+    <div class="venue-section">
+      <div class="venue-text">
+        <h3 style="color: #8b0000; margin:0 0 5px 0;">వేదిక / Venue:</h3>
+        <p style="margin: 0;"><b>సెంగుందర్ కమ్యూనిటీ తిరుమన మంటపం</b><br>(KTC డిపో వెనుక), పుళియంగుడి.</p>
+        <p style="font-size: 0.85rem; color: #555; margin: 5px 0 0 0;">మ్యాప్స్ కోసం QR కోడ్ స్కాన్ చేయండి.</p>
+      </div>
+      <div class="qrcode-box">
+        <div id="qrcode-te"></div>
+      </div>
+      <div class="qrcode-link">
+        <a href="https://maps.app.goo.gl/9yMhMgi5ft727Fef9" target="_blank">Get Directions</a>
+      </div>
+    </div>
+    <div class="footer">
+      <p><b>ఇట్లు:</b> కుటుంబ సభ్యులు మరియు బంధుమిత్రులు</p>
+    </div>
+  </div>
+
+  <!-- 5. KANNADA -->
+  <div id="content-kn" class="lang-content" style="font-family: 'Noto Serif Kannada', serif;">
+    <div class="header">
+      <p style="font-size: 0.9rem; color: #666;">ದೈವ ಕೃಪೆಯೊಂದಿಗೆ</p>
+      <h1>ಮದುವೆ ಆಮಂತ್ರಣ ಪತ್ರಿಕೆ</h1>
+    </div>
+    <div class="couple-photo-container">
+      <img src="./couple photo.jpeg" alt="Couple Photo" class="couple-photo">
+    </div>
+    <div class="names">
+      <span class="groom">ಎಸ್. ಶರವಣನ್ B.E.,</span>
+      <span class="ampersand">&amp;</span>
+      <span class="bride">ಪಿ. ಗಾಯತ್ರಿ M.Com.,</span>
+    </div>
+    <div class="details">
+      <p><b>ದೇವಾನುಗ್ರಹದಿಂದ...</b></p>
+      <p>ಪುಳಿಯಂಗುಡಿ ಶ್ರೀ ಬಾಲಸುಬ್ರಹ್ಮಣ್ಯ ಸ್ವಾಮಿ ದೇವಾಲಯ ಹಾಗೂ ಸೆಂಗುಂದರ್ ಕಮ್ಯೂనిಟಿ ಮಂಟಪದಲ್ಲಿ ನಡೆಯಲಿರುವ ವಿವಾಹ ಮಹೋತ್ಸವಕ್ಕೆ ಕುಟುಂಬ ಸಮೇತರಾಗಿ ಆಗಮಿಸಿ ನವದಂಪತಿಗಳನ್ನು ಹರಸಬೇಕಾಗಿ ವಿನಂತಿ.</p>
+    </div>
+    <div class="date-box">
+      ದಿನಾಂಕ: 13-11-2026, ಶುಕ್ರವಾರ<br>(ಬೆಳಗ್ಗೆ 9:00 - 10:30)
+    </div>
+    <div class="venue-section">
+      <div class="venue-text">
+        <h3 style="color: #8b0000; margin:0 0 5px 0;">ಸ್ಥಳ / Venue:</h3>
+        <p style="margin: 0;"><b>ಸೆಂಗುಂದರ್ ಕಮ್ಯೂనిಟಿ ತಿರುಮನ ಮಂಟಪ</b><br>(KTC ಡಿಪೋ ಹಿಂದೆ), ಪುಳಿಯಂಗುಡಿ.</p>
+        <p style="font-size: 0.85rem; color: #555; margin: 5px 0 0 0;">ಮ್ಯಾಪ್‌ಗಾಗಿ QR ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ.</p>
+      </div>
+      <div class="qrcode-box">
+        <div id="qrcode-kn"></div>
+      </div>
+      <div class="qrcode-link">
+        <a href="https://maps.app.goo.gl/9yMhMgi5ft727Fef9" target="_blank">Get Directions</a>
+      </div>
+    </div>
+    <div class="footer">
+      <p><b>ಆಹ್ವಾನಕರು:</b> ಕುಟುಂಬದವರು ಹಾಗೂ ಬಂಧುಮಿತ್ರರು</p>
+    </div>
+  </div>
+
+  <!-- 6. HINDI -->
+  <div id="content-hi" class="lang-content" style="font-family: 'Rozha One', serif;">
+    <div class="header">
+      <p style="font-size: 0.9rem; color: #666; font-family: sans-serif;">ईश्वर की कृपा से</p>
+      <h1 style="font-family: sans-serif;">विवाह निमंत्रण पत्र</h1>
+    </div>
+    <div class="couple-photo-container">
+      <img src="./couple photo.jpeg" alt="Couple Photo" class="couple-photo">
+    </div>
+    <div class="names">
+      <span class="groom">एस. सरവണන් B.E.,</span>
+      <span class="ampersand">&amp;</span>
+      <span class="bride">पी. गायत्री M.Com.,</span>
+    </div>
+    <div class="details" style="font-family: sans-serif; font-size: 0.95rem;">
+      <p><b>परमात्मा के आशीर्वाद से...</b></p>
+      <p>पुलियांगुडी में श्री बालसुब्रह्मण्य स्वामी मंदिर और सेंगुंदर समुदाय मंडप में आयोजित होने वाले शुभ विवाह समारोह में सपरिवार सम्मिलित होकर वर-वधू को आशीर्वाद प्रदान करें。</p>
+    </div>
+    <div class="date-box" style="font-family: sans-serif;">
+      दिनांक: 13-11-2026, शुक्रवार<br>(प्रातः 9:00 - 10:30)
+    </div>
+    <div class="venue-section" style="font-family: sans-serif;">
+      <div class="venue-text">
+        <h3 style="color: #8b0000; margin:0 0 5px 0;">विवाह स्थल / Venue:</h3>
+        <p style="margin: 0;"><b>सेंगुंदर समुदाय विवाह मंडप</b><br>(KTC डिपो के पीछे), पुलियांगुडी。</p>
+        <p style="font-size: 0.85rem; color: #555; margin: 5px 0 0 0;">मैप के लिए QR कोड स्कैन करें。</p>
+      </div>
+      <div class="qrcode-box">
+        <div id="qrcode-hi"></div>
+      </div>
+      <div class="qrcode-link">
+        <a href="https://maps.app.goo.gl/9yMhMgi5ft727Fef9" target="_blank">Get Directions</a>
+      </div>
+    </div>
+    <div class="footer" style="font-family: sans-serif;">
+      <p><b>शुभचिंतक एवं आकांक्षी:</b> समस्त परिवार, रिश्तेदार और मित्रगण</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const mapUrl = "https://maps.app.goo.gl/8a2jXBQMeizXfAyx9";
+  const qrConfigs = ['qrcode-ta', 'qrcode-en', 'qrcode-ml', 'qrcode-te', 'qrcode-kn', 'qrcode-hi'];
+  
+  qrConfigs.forEach(id => {
+    new QRCode(document.getElementById(id), {
+      text: mapUrl,
+      width: 90,
+      height: 90,
+      colorDark : "#4a1515",
+      colorLight : "#ffffff",
+      correctLevel : QRCode.CorrectLevel.M
+    });
+  });
+
+  function setLang(lang, btn) {
+    document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active-btn'));
+    
+    document.getElementById('content-' + lang).classList.add('active');
+    btn.classList.add('active-btn');
+
+    // Pause all songs and play selected language song
+    document.querySelectorAll('audio').forEach(aud => {
+      aud.pause();
+      aud.currentTime = 0;
+    });
+
+    const activeAudio = document.getElementById('audio-' + lang);
+    if(activeAudio) {
+      activeAudio.play().catch(e => console.log("Audio play blocked by browser:", e));
+    }
+  }
+</script>
+
+</body>
+</html>
