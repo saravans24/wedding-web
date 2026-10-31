@@ -17,16 +17,40 @@
     font-family: 'Tiro Tamil', serif;
   }
 
-  .lang-bar {
-    text-align: center;
-    padding: 10px 5px;
-    background: #4a1515;
+  .top-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
     position: sticky;
     top: 0;
     z-index: 1000;
+    background: #4a1515;
+    padding: 10px;
     border-radius: 8px;
     margin-bottom: 15px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+
+  .music-btn {
+    background: #ff4757;
+    color: #fff;
+    border: none;
+    padding: 6px 16px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: 0.3s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+
+  .music-btn.playing {
+    background: #2ed573;
+  }
+
+  .lang-bar {
+    text-align: center;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -156,6 +180,21 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   }
 
+  .qrcode-link {
+    margin-top: 8px;
+  }
+
+  .qrcode-link a {
+    color: #8b0000;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+
+  .qrcode-link a:hover {
+    text-decoration: underline;
+  }
+
   .footer {
     text-align: center;
     margin-top: 20px;
@@ -189,13 +228,18 @@
 <audio id="audio-kn" loop><source src="./kannada_song.mp4" type="audio/mp3"></audio>
 <audio id="audio-hi" loop><source src="./Hindi.mp4" type="audio/mp3"></audio>
 
-<div class="lang-bar">
-  <button class="lang-btn active-btn" onclick="setLang('ta', this)">தமிழ்</button>
-  <button class="lang-btn" onclick="setLang('en', this)">English</button>
-  <button class="lang-btn" onclick="setLang('ml', this)">മലയാളം</button>
-  <button class="lang-btn" onclick="setLang('te', this)">తెలుగు</button>
-  <button class="lang-btn" onclick="setLang('kn', this)">ಕನ್ನಡ</button>
-  <button class="lang-btn" onclick="setLang('hi', this)">हिन्दी</button>
+<div class="top-controls">
+  <!-- Common Play/Pause Music Button -->
+  <button id="musicToggleBtn" class="music-btn" onclick="toggleMusic()">🔇 Play Music</button>
+
+  <div class="lang-bar">
+    <button class="lang-btn active-btn" onclick="setLang('ta', this)">தமிழ்</button>
+    <button class="lang-btn" onclick="setLang('en', this)">English</button>
+    <button class="lang-btn" onclick="setLang('ml', this)">മലയാളം</button>
+    <button class="lang-btn" onclick="setLang('te', this)">తెలుగు</button>
+    <button class="lang-btn" onclick="setLang('kn', this)">ಕನ್ನಡ</button>
+    <button class="lang-btn" onclick="setLang('hi', this)">हिन्दी</button>
+  </div>
 </div>
 
 <div class="container">
@@ -332,7 +376,7 @@
     </div>
     <div class="details">
       <p><b>సర్వేశ్వరుని దివ్య కృపతో...</b></p>
-      <p>పుళియంగుడి அருள்மிகு శ్రీ బాలసుబ్రహ్మణ్య స్వామి వారి దేవాలయం మరియు సెంగుందర్ కమ్యూనిటీ మంటపంలో జరగనున్న వివాహ మహోత్సవానికి కుటుంబ సమేతంగా విచ్చేసి ఆశీర్వదించవలసిందిగా కోరుచున్నాము.</p>
+      <p>పులియంగుడిలోని అరుల్మిగు శ్రీ బాలసుబ్రమణ్య స్వామి దేవాలయంలోను, మరియు శెంగుంతర్ సముదాయ కళ్యాణ మండపంలోను జరగబోయే వివాహ మహోత్సవానికి మిమ్మల్ని ప్రేమతో ఆహ్వానిస్తున్నాము!</p>
     </div>
     <div class="date-box">
       తేదీ: 13-11-2026, శుక్రవారం<br>(ఉదయం 9:00 - 10:30)
@@ -449,6 +493,31 @@
     });
   });
 
+  let isPlaying = false;
+  let currentLang = 'ta';
+
+  function getCurrentAudio() {
+    return document.getElementById('audio-' + currentLang);
+  }
+
+  function toggleMusic() {
+    const btn = document.getElementById('musicToggleBtn');
+    const audio = getCurrentAudio();
+
+    if (isPlaying) {
+      audio.pause();
+      isPlaying = false;
+      btn.innerText = "🔇 Play Music";
+      btn.classList.remove('playing');
+    } else {
+      audio.play().then(() => {
+        isPlaying = true;
+        btn.innerText = "🔊 Pause Music";
+        btn.classList.add('playing');
+      }).catch(e => console.log("Play blocked:", e));
+    }
+  }
+
   function setLang(lang, btn) {
     document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active-btn'));
@@ -456,15 +525,23 @@
     document.getElementById('content-' + lang).classList.add('active');
     btn.classList.add('active-btn');
 
-    // Pause all songs and play selected language song
+    // Pause all audio tracks
     document.querySelectorAll('audio').forEach(aud => {
       aud.pause();
       aud.currentTime = 0;
     });
 
-    const activeAudio = document.getElementById('audio-' + lang);
-    if(activeAudio) {
-      activeAudio.play().catch(e => console.log("Audio play blocked by browser:", e));
+    currentLang = lang;
+    const musicBtn = document.getElementById('musicToggleBtn');
+
+    if (isPlaying) {
+      const newAudio = getCurrentAudio();
+      newAudio.play().catch(e => console.log("Play blocked:", e));
+      musicBtn.innerText = "🔊 Pause Music";
+      musicBtn.classList.add('playing');
+    } else {
+      musicBtn.innerText = "🔇 Play Music";
+      musicBtn.classList.remove('playing');
     }
   }
 </script>
